@@ -1,0 +1,12 @@
+1. The depth of height 
+Color.white = 0
+Color.black = 1
+Color.red = 2
+Color.green = 3
+Color.blue = 4
+Color.yellow = 5
+new(0f,1f,1f,1f) = 6
+new(1f,0f,1f,1f) = 7
+
+When import texture into Unity change Non-power of 2 into None value
+Click Read/Write = true

@@ -9,11 +9,15 @@ public class MapGenerater : MonoBehaviour
     private int currentGround = 0;
     [SerializeField] private GameObject soil = null;
     [SerializeField] private List<MapScriptableObject> maps = new();
-    private int currentMap = 0;
+    [SerializeField] private int currentMap = 0;
     [SerializeField]
     private List<Color> groundColor = new();
     [SerializeField] private Vector2 groundRate = new(2f, 1f);
     [SerializeField] private Transform groundParent;
+
+    [Space(10)]
+    [Header("Generate Chesss")]
+    [SerializeField] private List<ChessSpawn> chesses = new();
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -81,12 +85,20 @@ public class MapGenerater : MonoBehaviour
     {
         for (int i = 0; i < groundColor.Count; i++)
         {
-            if (groundColor[i].Equals(newColor))
+            if (ColorsAreApproximatelyEqual(groundColor[i], newColor))
             {
                 return i;
             }
         }
         return 0;
+    }
+
+    private bool ColorsAreApproximatelyEqual(Color color1, Color color2)
+    {
+        return Mathf.Approximately(color1.r, color2.r) &&
+               Mathf.Approximately(color1.g, color2.g) &&
+               Mathf.Approximately(color1.b, color2.b) &&
+               Mathf.Approximately(color1.a, color2.a);
     }
     public void SpawnGround(int depth, int x, int y)
     {
@@ -111,16 +123,24 @@ public class MapGenerater : MonoBehaviour
         {
             soil = prefabs[0];
         }
+
         groundColor = new()
         {
             Color.white,
-            Color.black
+            Color.black,
+            Color.red,
+            Color.green,
+            Color.blue,
+            new(1f,1f,0f,1f),
+            new(0f,1f,1f,1f),
+            new(1f,0f,1f,1f)
         };
         prefabs?.Clear();
     }
 }
 [System.Serializable]
-public class MapGround
+public class ChessSpawn
 {
-    public GameObject ground;
+    public GameObject chess;
+    public Color chessColor;
 }
