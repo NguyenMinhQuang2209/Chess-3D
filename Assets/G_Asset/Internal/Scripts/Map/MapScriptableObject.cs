@@ -6,4 +6,5 @@ using UnityEngine;
 public class MapScriptableObject : ScriptableObject
 {
     public Texture2D mapTexture;
+    public Texture2D chessTexture;
 }

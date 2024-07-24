@@ -10,3 +10,17 @@ new(1f,0f,1f,1f) = 7
 
 When import texture into Unity change Non-power of 2 into None value
 Click Read/Write = true
+
+Black_Vua = (10,0,0)
+Black_Hau = (20,0,0)
+Black_Tuong = (30,0,0)
+Black_Xe = (40,0,0)
+Black_Ma = (50,0,0)
+Black_Tot = (60,0,0)
+
+Light_Vua = (10,255,255)
+Light_Hau = (20,255,255)
+Light_Tuong = (30,255,255)
+Light_Xe = (40,255,255)
+Light_Ma = (50,255,255)
+Light_Tot = (60,255,255)

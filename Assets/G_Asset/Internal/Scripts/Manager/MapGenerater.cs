@@ -17,7 +17,21 @@ public class MapGenerater : MonoBehaviour
 
     [Space(10)]
     [Header("Generate Chesss")]
-    [SerializeField] private List<ChessSpawn> chesses = new();
+    [SerializeField] private ChessPrefab b_vua = new(new(10f / 255f, 0, 0, 1));
+    [SerializeField] private ChessPrefab b_hau = new(new(20f / 255f, 0, 0, 1));
+    [SerializeField] private ChessPrefab b_tuong = new(new(30f / 255f, 0, 0, 1));
+    [SerializeField] private ChessPrefab b_xe = new(new(40f / 255f, 0, 0, 1));
+    [SerializeField] private ChessPrefab b_ma = new(new(50f / 255f, 0, 0, 1));
+    [SerializeField] private ChessPrefab b_tot = new(new(60f / 255f, 0, 0, 1));
+
+    [SerializeField] private ChessPrefab l_vua = new(new(10f / 255f, 1f, 1f, 1));
+    [SerializeField] private ChessPrefab l_hau = new(new(10f / 255f, 1f, 1f, 1));
+    [SerializeField] private ChessPrefab l_tuong = new(new(10f / 255f, 1f, 1f, 1));
+    [SerializeField] private ChessPrefab l_xe = new(new(10f / 255f, 1f, 1f, 1));
+    [SerializeField] private ChessPrefab l_ma = new(new(10f / 255f, 1f, 1f, 1));
+    [SerializeField] private ChessPrefab l_tot = new(new(10f / 255f, 1f, 1f, 1));
+
+    private List<ChessPrefab> chessPrefabs = new();
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -31,6 +45,7 @@ public class MapGenerater : MonoBehaviour
     private void Start()
     {
         LoadMap();
+        SetupChessPrefabList();
     }
     public GameObject GetGround()
     {
@@ -51,9 +66,14 @@ public class MapGenerater : MonoBehaviour
     {
         return maps[currentMap].mapTexture;
     }
+    public Texture2D GetChessTexture2D()
+    {
+        return maps[currentMap].chessTexture;
+    }
     public void LoadMap()
     {
         Texture2D mapTexture = GetMapTexture2D();
+        Texture2D chessTexture = GetChessTexture2D();
 
         int width = mapTexture.width;
         int height = mapTexture.height;
@@ -68,16 +88,21 @@ public class MapGenerater : MonoBehaviour
             groundParent = ground.transform;
         }
         groundParent.transform.position = newPos;
+        bool needReload = (width * height) % 2 == 0;
 
         for (int i = 0; i < width; i++)
         {
-            GetGround();
+            if (needReload)
+            {
+                GetGround();
+            }
             for (int j = 0; j < height; j++)
             {
                 int index = i * height + j;
                 Color currentColor = mapTexture.GetPixel(i, j);
+                Color chessColor = chessTexture.GetPixel(i, j);
                 int depth = GroundIndex(currentColor);
-                SpawnGround(depth, i, j);
+                SpawnGround(depth, i, j, chessColor);
             }
         }
     }
@@ -100,7 +125,7 @@ public class MapGenerater : MonoBehaviour
                Mathf.Approximately(color1.b, color2.b) &&
                Mathf.Approximately(color1.a, color2.a);
     }
-    public void SpawnGround(int depth, int x, int y)
+    public void SpawnGround(int depth, int x, int y, Color color)
     {
         Vector3 spawnPos = new(x * groundRate.x, 0f, y * groundRate.x);
         for (int i = 0; i < depth; i++)
@@ -112,6 +137,14 @@ public class MapGenerater : MonoBehaviour
         Vector3 spawnGroundPos = new(spawnPos.x, depth * groundRate.y, spawnPos.z);
         GameObject groundInstance = Instantiate(GetGround(), groundParent);
         groundInstance.transform.localPosition = spawnGroundPos;
+
+        GameObject chess = GetChessPrefab(color);
+        if (chess != null)
+        {
+            Vector3 chessPos = new(spawnPos.x, depth * groundRate.y + 1f, spawnPos.z);
+            GameObject chessInstance = Instantiate(chess, groundParent);
+            chessInstance.transform.localPosition = chessPos;
+        }
     }
     public void SetUpPrefabs(List<GameObject> prefabs, bool isSoil = false)
     {
@@ -135,12 +168,59 @@ public class MapGenerater : MonoBehaviour
             new(0f,1f,1f,1f),
             new(1f,0f,1f,1f)
         };
+        SetupChessPrefabList();
         prefabs?.Clear();
+    }
+    public void SetupChessPrefabList()
+    {
+        List<ChessPrefab> tempList = new()
+        {
+            b_vua,
+            b_hau,
+            b_tuong,
+            b_xe,
+            b_ma,
+            b_tot,
+            l_vua,
+            l_hau,
+            l_tuong,
+            l_xe,
+            l_ma,
+            l_tot,
+        };
+
+        chessPrefabs = new(tempList);
+        tempList?.Clear();
+    }
+    public GameObject GetChessPrefab(Color newColor)
+    {
+        foreach (ChessPrefab chessPrefab in chessPrefabs)
+        {
+            if (ColorsAreApproximatelyEqual(chessPrefab.GetColor(), newColor))
+            {
+                return chessPrefab.chess;
+            }
+        }
+
+        return null;
     }
 }
 [System.Serializable]
-public class ChessSpawn
+public class ChessPrefab
 {
     public GameObject chess;
-    public Color chessColor;
+    public Color color;
+    public ChessPrefab(GameObject chess, Color color)
+    {
+        this.chess = chess;
+        this.color = color;
+    }
+    public ChessPrefab(Color color)
+    {
+        this.color = color;
+    }
+    public Color GetColor()
+    {
+        return color;
+    }
 }

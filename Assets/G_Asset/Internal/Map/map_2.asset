@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 555f040f42cb5d341ba20f11d7c592bb, type: 3}
-  m_Name: map_1
+  m_Name: map_2
   m_EditorClassIdentifier: 
-  mapTexture: {fileID: 2800000, guid: ca1d106f98ddecc4aa9b617bd2eb7ac4, type: 3}
-  chessTexture: {fileID: 2800000, guid: f836ab4176d9d0d48b3767e96d2d910e, type: 3}
+  mapTexture: {fileID: 2800000, guid: 5e0f46d0ed369654fad4be91bbde9c1f, type: 3}
+  chessTexture: {fileID: 2800000, guid: 6d9c776c6f19187469e84315804c3ab1, type: 3}

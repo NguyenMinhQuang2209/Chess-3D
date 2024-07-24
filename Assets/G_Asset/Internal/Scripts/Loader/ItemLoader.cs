@@ -9,12 +9,17 @@ public static class ItemLoader
     {
         string mapSprite = "Assets/G_Asset/Local/Map";
         string storePath = "Assets/G_Asset/Internal/Map";
+        string chessPath = "Assets/G_Asset/Local/Chess";
         string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { mapSprite });
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             string storePathName = $"{storePath}/{texture.name}.asset";
+            string extension = System.IO.Path.GetExtension(path).TrimStart('.');
+            string chessPathName = $"{chessPath}/{texture.name}_chess.{extension}";
+            Texture2D chessTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(chessPathName);
+
             MapScriptableObject map = AssetDatabase.LoadAssetAtPath<MapScriptableObject>(storePathName);
             if (map == null)
             {
@@ -22,6 +27,7 @@ public static class ItemLoader
                 AssetDatabase.CreateAsset(map, storePathName);
             }
             map.mapTexture = texture;
+            map.chessTexture = chessTexture;
             EditorUtility.SetDirty(map);
         }
         AssetDatabase.SaveAssets();
