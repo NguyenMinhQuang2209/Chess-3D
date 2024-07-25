@@ -102,7 +102,14 @@ public class MapGenerater : MonoBehaviour
                 Color currentColor = mapTexture.GetPixel(i, j);
                 Color chessColor = chessTexture.GetPixel(i, j);
                 int depth = GroundIndex(currentColor);
-                SpawnGround(depth, i, j, chessColor);
+                if (depth > -1)
+                {
+                    SpawnGround(depth, i, j, chessColor);
+                }
+                else
+                {
+                    GetGround();
+                }
             }
         }
     }
@@ -115,7 +122,7 @@ public class MapGenerater : MonoBehaviour
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     private bool ColorsAreApproximatelyEqual(Color color1, Color color2)

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: map_2
   m_EditorClassIdentifier: 
   mapTexture: {fileID: 2800000, guid: 5e0f46d0ed369654fad4be91bbde9c1f, type: 3}
-  chessTexture: {fileID: 2800000, guid: 6d9c776c6f19187469e84315804c3ab1, type: 3}
+  chessTexture: {fileID: 2800000, guid: 2aabf4534e2908b4eb9645d5fb297e66, type: 3}
