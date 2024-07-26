@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 33326997902383790}
   - component: {fileID: 23198447836628154}
   - component: {fileID: 64985606641792958}
-  m_Layer: 0
+  - component: {fileID: 628377094207536306}
+  m_Layer: 6
   m_Name: checker_white
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,10 +100,22 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300030, guid: 7b1ebbee2001ef74887110b41491763f, type: 3}
+--- !u!114 &628377094207536306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433940158306448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f07c32832ad7b14ba8c76a2dc1d1513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
